@@ -359,6 +359,20 @@ body {
 
 .theme-toggle { background: transparent; border: none; color: var(--text-secondary); font-size: 1.05rem; padding:6px; cursor:pointer; }
 
+/* mobile-only helpers: hidden by default, enabled in small viewports */
+.mobile-only { display: none; }
+
+/* Mobile compact controls: hide desktop links and show only home + theme toggle */
+@media (max-width: 768px) {
+    .nav-links-container { display: none; }
+    .centered-nav { padding: 6px 10px; gap: 0.5rem; top: 12px; }
+    /* inline mobile-only items inside the navbar (no hamburger) */
+    .mobile-only { display: inline-flex; align-items: center; gap: .5rem; color: var(--text-secondary); font-weight: 700; text-transform: lowercase; }
+    .mobile-only:hover { color: var(--accent); }
+    /* hide desktop theme toggle, use mobile-specific theme button */
+    #theme-toggle { display: none; }
+}
+
 /* Smooth scroll behavior */
 html {
     scroll-behavior: smooth;

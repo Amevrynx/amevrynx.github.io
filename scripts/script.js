@@ -292,6 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     const themeBtn = document.getElementById('theme-toggle');
     if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+    const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
+    if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
 
     loadGitHubRepos();
     initializeMatrixBackground();
