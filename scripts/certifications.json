@@ -23,6 +23,12 @@
       "issuer": "Edunet Foundation",
       "date": "15-Jan-2025 - 26-Feb-2025",
       "description": "Hands-on experience in cybersecurity practices, threat analysis, and security implementation through an intensive internship program."
+    },
+    {
+      "title": "IIOT (Industrial Internet of Things)",
+      "issuer": "NPTEL",
+      "date": "Jul-2025 - OCT-2025",
+      "description": "Comprehensive understanding of Industrial Internet of Things (IIoT) technologies, applications, and security considerations."
     }
   ]
 }
