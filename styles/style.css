@@ -362,6 +362,37 @@ body {
 /* mobile-only helpers: hidden by default, enabled in small viewports */
 .mobile-only { display: none; }
 
+/* Site loader styles */
+.site-loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    transition: opacity 300ms ease, visibility 300ms ease;
+}
+.site-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.site-loader .loader-inner { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.site-loader .loader-text { color: var(--text-primary); font-weight: 700; letter-spacing: 0.06em; text-transform: lowercase; }
+.spinner {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 6px solid rgba(255,255,255,0.08);
+    border-top-color: rgba(var(--accent-rgb),1);
+    animation: spin 1s linear infinite;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* reduce loader opacity on light theme slightly */
+.theme-light .site-loader { background: rgba(255,255,255,0.85); }
+.theme-light .spinner { border-color: rgba(0,0,0,0.06); border-top-color: rgba(var(--accent-rgb),1); }
+
 /* Mobile compact controls: hide desktop links and show only home + theme toggle */
 @media (max-width: 768px) {
     .nav-links-container { display: none; }

@@ -93,6 +93,22 @@ function preloadResources(timeout = 5000) {
     return Promise.all(promises).then(() => {});
 }
 
+// Loader control helpers
+function showLoader() {
+    const l = document.getElementById('site-loader');
+    if (!l) return;
+    l.classList.remove('hidden');
+    l.setAttribute('aria-hidden', 'false');
+}
+
+function hideLoader() {
+    const l = document.getElementById('site-loader');
+    if (!l) return;
+    l.classList.add('hidden');
+    l.setAttribute('aria-hidden', 'true');
+    try { document.body.classList.add('loaded'); } catch (e) {}
+}
+
 // AOS Initialization
 AOS.init({
     duration: 600,
@@ -345,6 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bustCSS();
 
     // Preload critical resources (styles, scripts, images, fonts) then initialize
+    const _safetyTimer = setTimeout(() => { try { hideLoader(); } catch (e) {} }, 8000);
     preloadResources(6000).then(() => {
         initTheme();
         const themeBtn = document.getElementById('theme-toggle');
@@ -359,6 +376,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loadEducation();
         loadSkills();
         initSectionObserver();
+        clearTimeout(_safetyTimer);
+        setTimeout(() => { try { hideLoader(); } catch (e) {} }, 200);
     }).catch(() => {
         // If preloading fails or times out, still initialize to avoid blocking UX
         initTheme();
@@ -373,5 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadEducation();
         loadSkills();
         initSectionObserver();
+        clearTimeout(_safetyTimer);
+        setTimeout(() => { try { hideLoader(); } catch (e) {} }, 200);
     });
 });

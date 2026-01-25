@@ -28,6 +28,14 @@
 </head>
 <body class="relative">
 
+    <!-- Site loader: shown while the resources are being initiated-->
+    <div id="site-loader" class="site-loader" role="status" aria-live="polite" aria-label="Loading website">
+        <div class="loader-inner">
+            <div class="spinner" aria-hidden="true"></div>
+            <div class="loader-text">loading…</div>
+        </div>
+    </div>
+
     <!-- Floating Navbar -->
     <nav id="main-nav" class="centered-nav" role="navigation" aria-label="Primary">
         <div class="nav-links-container">
@@ -221,8 +229,8 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
     <script src="/scripts/script.js" defer></script>
 </body>
 </html>
