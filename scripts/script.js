@@ -43,9 +43,6 @@ function bustCSS() {
 function preloadResources(timeout = 5000) {
     const seen = new Set();
     const resources = [];
-
-    // collect stylesheet and script href/src
-        // collect stylesheet hrefs (only same-origin stylesheets for preload)
         document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
             if (!l.href) return;
             try {

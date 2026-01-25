@@ -278,7 +278,6 @@ body {
     display: inline-block;
 }
 
-/* Ensure Tailwind utility color choices adapt in light theme for certifications */
 .text-accent { color: var(--accent); }
 
 .theme-light .bg-gray-800 { background-color: var(--bg-secondary) !important; }
@@ -288,7 +287,6 @@ body {
 .theme-light .text-gray-500 { color: rgba(var(--text-secondary-rgb),0.9) !important; }
 .theme-light .shadow-lg { box-shadow: 0 8px 24px rgba(var(--accent-rgb),0.04) !important; }
 
-/* Archives 'View All' button */
 .view-all-btn {
     display: inline-flex;
     align-items: center;
@@ -397,10 +395,8 @@ body {
 @media (max-width: 768px) {
     .nav-links-container { display: none; }
     .centered-nav { padding: 6px 10px; gap: 0.5rem; top: 12px; }
-    /* inline mobile-only items inside the navbar (no hamburger) */
     .mobile-only { display: inline-flex; align-items: center; gap: .5rem; color: var(--text-secondary); font-weight: 700; text-transform: lowercase; }
     .mobile-only:hover { color: var(--accent); }
-    /* hide desktop theme toggle, use mobile-specific theme button */
     #theme-toggle { display: none; }
 }
 
