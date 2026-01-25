@@ -355,8 +355,6 @@ function loadSkills() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Apply cache-busting first so preload uses fresh URLs
-    bustCSS();
 
     // Preload critical resources (styles, scripts, images, fonts) then initialize
     const _safetyTimer = setTimeout(() => { try { hideLoader(); } catch (e) {} }, 8000);
