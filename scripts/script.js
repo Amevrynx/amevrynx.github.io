@@ -1,3 +1,44 @@
+// Theme handling (light / dark)
+const THEME_KEY = 'themePreference';
+
+function applyTheme(theme) {
+    document.documentElement.classList.remove('theme-light', 'theme-dark');
+    document.documentElement.classList.add(`theme-${theme}`);
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.innerHTML = theme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+}
+
+function initTheme() {
+    const stored = localStorage.getItem(THEME_KEY);
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    const theme = stored || (prefersLight ? 'light' : 'dark');
+    applyTheme(theme);
+}
+
+function toggleTheme() {
+    const isDark = document.documentElement.classList.contains('theme-dark');
+    const next = isDark ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem(THEME_KEY, next);
+    try { document.dispatchEvent(new Event('themechange')); } catch (e) {}
+}
+
+// Force-reload CSS on each page load to avoid stale styles
+function bustCSS() {
+    const links = document.querySelectorAll('link[rel="stylesheet"]');
+    links.forEach(link => {
+        try {
+            const href = link.getAttribute('href');
+            if (!href) return;
+            if (href.includes('/styles/style.css') || href.endsWith('style.css') || link.href.startsWith(location.origin)) {
+                const url = new URL(link.href, location.origin);
+                url.searchParams.set('ts', Date.now());
+                link.href = url.toString();
+            }
+        } catch (e) {}
+    });
+}
+
 // AOS Initialization
 AOS.init({
     duration: 300,
@@ -9,23 +50,46 @@ AOS.init({
     anchorPlacement: 'top-bottom'
 });
 
-// Smooth Scrolling
+// Smooth Scrolling (header offset computed from navbar)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
+        if (!target) return;
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const headerOffset = 80;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY - headerOffset;
+        const nav = document.getElementById('main-nav');
+        const headerOffset = nav ? (nav.offsetHeight + 20) : 80;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        }
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        if (this.classList.contains('nav-link')) this.classList.add('active');
     });
 });
+
+// Active section highlighting using IntersectionObserver
+let _sectionObserver = null;
+function initSectionObserver() {
+    if (_sectionObserver) { _sectionObserver.disconnect(); _sectionObserver = null; }
+    const nav = document.getElementById('main-nav');
+    const navHeight = nav ? nav.offsetHeight + 20 : 80;
+    const options = { root: null, rootMargin: `-${navHeight}px 0px -55% 0px`, threshold: 0.08 };
+    _sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.id;
+            const link = document.querySelector(`.nav-link[href="#${id}"]`);
+            if (entry.isIntersecting) {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                if (link) link.classList.add('active');
+            }
+        });
+    }, options);
+    document.querySelectorAll('section[id]').forEach(section => _sectionObserver.observe(section));
+    let resizeTimer = null;
+    window.addEventListener('resize', () => { if (resizeTimer) clearTimeout(resizeTimer); resizeTimer = setTimeout(() => initSectionObserver(), 250); });
+}
 
 // Typed.js Framework Usage
 new Typed('#typed-text', {
@@ -83,27 +147,46 @@ function initializeMatrixBackground() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     document.body.appendChild(canvas);
+    // responsive canvas / drops setup
+    const chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?~アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン";
+    const drops = [];
+    const fontSize = 16;
+    let columns = 0;
 
     function resizeCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        const newColumns = Math.floor(canvas.width / fontSize) || 1;
+        if (newColumns > columns) {
+            for (let i = columns; i < newColumns; i++) drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+        } else if (newColumns < columns) {
+            drops.length = newColumns;
+        }
+        columns = newColumns;
     }
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?~アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン";
-    const drops = [];
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    for (let i = 0; i < columns; i++) {
-        drops[i] = 1;
+    // colors adapt to theme
+    let bgFade = 'rgba(0,0,0,0.05)';
+    let charColor = `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb') || '200,29,37'},0.95)`;
+
+    function updateMatrixColors() {
+        const cs = getComputedStyle(document.documentElement);
+        const accentRgb = cs.getPropertyValue('--accent-rgb').trim() || '200,29,37';
+        const isLight = document.documentElement.classList.contains('theme-light');
+        charColor = `rgba(${accentRgb},${isLight ? 0.85 : 0.95})`;
+        bgFade = isLight ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.05)';
     }
 
+    updateMatrixColors();
+    document.addEventListener('themechange', updateMatrixColors);
+
     function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = bgFade;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#ffffffff';
+        ctx.fillStyle = charColor;
         ctx.font = fontSize + 'px monospace';
 
         for (let i = 0; i < drops.length; i++) {
@@ -116,7 +199,10 @@ function initializeMatrixBackground() {
             drops[i]++;
         }
     }
-    setInterval(draw, 35);
+
+    const interval = setInterval(draw, 35);
+    const observer = new MutationObserver(() => { if (!document.body.contains(canvas)) clearInterval(interval); });
+    observer.observe(document.body, { childList: true, subtree: true });
 }
 
 // Certifications
@@ -199,9 +285,15 @@ function loadSkills() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    bustCSS();
+    initTheme();
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
     loadGitHubRepos();
     initializeMatrixBackground();
     loadCertifications();
     loadEducation();
     loadSkills();
+    initSectionObserver();
 });

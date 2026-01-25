@@ -28,11 +28,16 @@
 </head>
 <body class="relative">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-opacity-90 backdrop-filter backdrop-blur-sm shadow-lg transition-transform duration-300" style="background-color: #1c253196; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold terminal-text hover:scale-105 transition-transform name-logo">~/nns</a>
+    <!-- Floating Navbar -->
+    <nav id="main-nav" class="centered-nav" role="navigation" aria-label="Primary">
+        <div class="nav-links-container">
+            <a href="#home" class="nav-link">home</a>
+            <a href="#about" class="nav-link">about</a>
+            <a href="#qualifications" class="nav-link">credentials</a>
+            <a href="#work" class="nav-link">archives</a>
+            <a href="#contact" class="nav-link">connect</a>
         </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme"> <i class="fas fa-moon"></i> </button>
     </nav>
 
     <!-- Hero Section -->
@@ -41,12 +46,12 @@
         <div class="container mx-auto flex items-center justify-center relative z-10">
             <div data-aos="fade-up" class="text-center hover:transform hover:scale-105 transition-all duration-300 relative">
                 <div class="hero-bg absolute top-0 left-0 w-full h-full"></div>
-                <div class="terminal-window mb-6 relative" style="background-color: rgba(10, 10, 20, 0.95); border: 1px solid var(--accent); border-radius: 4px; box-shadow: 0 0 20px rgba(255, 255, 255, 0.356); width: 100%; max-width: 1200px; margin: 0 auto;">
-                    <div class="terminal-header flex items-center justify-between" style="background-color: rgba(20, 20, 40, 0.95); padding: 16px 24px; border-bottom: 1px solid var(--accent);">
+                <div class="terminal-window mb-6 relative">
+                    <div class="terminal-header flex items-center justify-between">
                         <div class="terminal-buttons flex space-x-2">
-                            <span class="terminal-button close" style="background-color: #ff5f56; width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(255, 95, 86, 0.5);"></span>
-                            <span class="terminal-button minimize" style="background-color: #ffbd2e; width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(255, 189, 46, 0.5);"></span>
-                            <span class="terminal-button maximize" style="background-color: #27c93f; width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(39, 201, 63, 0.5);"></span>
+                            <span class="terminal-button close" style="background-color: rgba(var(--terminal-btn-close-rgb),1); width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(var(--terminal-btn-close-rgb),0.5);"></span>
+                            <span class="terminal-button minimize" style="background-color: rgba(var(--terminal-btn-minimize-rgb),1); width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(var(--terminal-btn-minimize-rgb),0.5);"></span>
+                            <span class="terminal-button maximize" style="background-color: rgba(var(--terminal-btn-maximize-rgb),1); width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(var(--terminal-btn-maximize-rgb),0.5);"></span>
                         </div>
                         <div class="terminal-title" style="color: var(--accent); font-weight: bold; font-size: 1.25rem;">[SYSTEM] visitor@Portfolio:~</div>
                     </div>
@@ -147,7 +152,7 @@
     </section>
 
     <!-- Work Section -->
-    <section id="work" class="py-12 md:py-20 px-4 md:px-6" style="background-color: #161b22e0;">
+    <section id="work" class="py-12 md:py-20 px-4 md:px-6" style="background-color: var(--bg-secondary);">
         <div class="container mx-auto">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-16 terminal-text" data-aos="fade-up">> Archives</h2>
             <div id="github-repos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
