@@ -1,0 +1,19 @@
+{
+    "education": [
+        {
+            "degree": "High School",
+            "institution": "St. Joseph's High School • 2017-2021",
+            "description": "Completed high school with a focus on science and mathematics."
+        },
+        {
+            "degree": "Computer Science (Diploma)",
+            "institution": "Usha Rama College of Engineering • 2021-2024",
+            "description": "Specialized in computer science fundamentals and programming."
+        },
+        {
+            "degree": "Computer Science (B.Tech)",
+            "institution": "MIC College of Engineering • 2024-2027",
+            "description": "Relevant coursework in algorithms, data structures, and software engineering."
+        }
+    ]
+}

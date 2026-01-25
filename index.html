@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Neela Naga Sai | Portfolio</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+    <!-- Core styles and resources -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="/styles/style.css">
+
+    <style>
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -99;
+        }
+    </style>
+    
+</head>
+<body class="relative">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-opacity-90 backdrop-filter backdrop-blur-sm shadow-lg transition-transform duration-300" style="background-color: #1c253196; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold terminal-text hover:scale-105 transition-transform name-logo">~/nns</a>
+            
+            <button id="menu-toggle" class="menu-button text-2xl text-accent hover:text-white transition-colors">
+                <i class="fas fa-terminal"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Full Screen Menu -->
+    <div id="fullscreen-menu" class="fixed inset-0 bg-bg-primary z-40 transform translate-x-full transition-transform duration-500">
+        <div class="menu-glitch-container">
+            <div class="menu-glitch-layer"></div>
+            <div class="menu-glitch-layer"></div>
+            <div class="menu-glitch-layer"></div>
+        </div>
+        <div class="menu-content">
+            <div class="menu-header">
+                <div class="menu-title glitch-text whitespace-nowrap overflow-hidden text-ellipsis" data-text="SYSTEM MENU">SYSTEM MENU</div>
+                <div class="menu-subtitle">> Select an option to proceed</div>
+            </div>
+            <div class="menu-links">
+                <a href="#home" class="menu-link">
+                    <span class="menu-link-text" data-text="$ init_system">$ init_system</span>
+                </a>
+                <a href="#about" class="menu-link">
+                    <span class="menu-link-text" data-text="$ access_bio.dat">$ access_bio.dat</span>
+                </a>
+                <a href="#qualifications" class="menu-link">
+                    <span class="menu-link-text" data-text="$ decrypt_credentials">$ decrypt_credentials</span>
+                </a>
+                <a href="#work" class="menu-link">
+                    <span class="menu-link-text" data-text="$ scan_archives">$ scan_archives</span>
+                </a>
+                <a href="#contact" class="menu-link">
+                    <span class="menu-link-text" data-text="$ establish_connection">$ establish_connection</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 relative">
+        <div class="matrix-bg"></div>
+        <div class="container mx-auto flex items-center justify-center relative z-10">
+            <div data-aos="fade-up" class="text-center hover:transform hover:scale-105 transition-all duration-300 relative">
+                <div class="hero-bg absolute top-0 left-0 w-full h-full"></div>
+                <div class="terminal-window mb-6 relative" style="background-color: rgba(10, 10, 20, 0.95); border: 1px solid var(--accent); border-radius: 4px; box-shadow: 0 0 20px rgba(255, 255, 255, 0.356); width: 100%; max-width: 1200px; margin: 0 auto;">
+                    <div class="terminal-header flex items-center justify-between" style="background-color: rgba(20, 20, 40, 0.95); padding: 16px 24px; border-bottom: 1px solid var(--accent);">
+                        <div class="terminal-buttons flex space-x-2">
+                            <span class="terminal-button close" style="background-color: #ff5f56; width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(255, 95, 86, 0.5);"></span>
+                            <span class="terminal-button minimize" style="background-color: #ffbd2e; width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(255, 189, 46, 0.5);"></span>
+                            <span class="terminal-button maximize" style="background-color: #27c93f; width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: 0 0 5px rgba(39, 201, 63, 0.5);"></span>
+                        </div>
+                        <div class="terminal-title" style="color: var(--accent); font-weight: bold; font-size: 1.25rem;">[SYSTEM] visitor@Portfolio:~</div>
+                    </div>
+                    <div class="terminal-content p-8" style="color: var(--text-primary); font-family: 'Share Tech Mono', monospace; text-align: left; overflow-x: auto; min-height: 200px;">
+                        <p class="terminal-line"><span class="terminal-prompt" style="color: var(--accent); font-size: 1.25rem; ">$</span> <span class="text-gray-400">cat name.txt | figlet</span></p>
+                        <pre class="text-5xl sm:text-6xl md:text-7xl font-bold whitespace-pre-wrap" style="color: var(--accent); ">NeelaNagaSai  
+                        </pre>
+                        <p class="terminal-line"><span class="terminal-prompt" style="color: var(--accent); font-size: 1.25rem; ">$</span> <span class="text-gray-400">whoami</span></p>
+                        <p class="terminal-line"><span class="terminal-prompt" style="color: var(--accent); font-size: 1.25rem; ">> </span><span id="typed-text" class="text-xl sm:text-2xl text-gray-400"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 md:py-20 px-4 md:px-6" style="background-color: var(--bg-secondary); backdrop-filter : blur(5px);">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-16 terminal-text" data-aos="fade-up">> bio.dat</h2>
+            
+            <!-- Introduction Subsection -->
+            <div class="card p-6 md:p-8 rounded-lg mb-8" data-aos="fade-up">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 gradient-text">Introduction</h3>
+                <p class="text-sm md:text-base text-gray-400 leading-relaxed">
+                    I'm a passionate full-stack developer with a strong foundation in modern web technologies and some experience.
+                    As a Linux enthusiast and command-line power user, I bring a systematic approach to problem-solving 
+                    and development. Currently pursuing my B.Tech in Computer Science, I combine academic knowledge 
+                    with practical experience to create efficient and innovative solutions.
+                </p>
+            </div>
+
+            <!-- Skills Subsection -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="card p-6 md:p-8 rounded-lg" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-code text-3xl md:text-4xl mb-4" style="color: var(--accent)"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-4">Development</h3>
+                    <p class="text-sm md:text-base text-gray-400">Full-stack developer with expertise in modern web technologies and frameworks.</p>
+                </div>
+                <div class="card p-6 md:p-8 rounded-lg" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-terminal text-3xl md:text-4xl mb-4" style="color: var(--accent)"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-4">Systems</h3>
+                    <p class="text-sm md:text-base text-gray-400">Linux enthusiast and command-line power user.</p>
+                </div>
+                <div class="card p-6 md:p-8 rounded-lg" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-brain text-3xl md:text-4xl mb-4" style="color: var(--accent)"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-4">Problem Solving</h3>
+                    <p class="text-sm md:text-base text-gray-400">Analytical approach to complex technical challenges.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qualifications Section -->
+    <section id="qualifications" class="py-12 md:py-20 px-4 md:px-6">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-16 terminal-text" data-aos="fade-up">> Credentials</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                <div class="card p-6 md:p-8 rounded-lg" data-aos="fade-up">
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 gradient-text"> > Education</h3>
+                    <div id="education-container" class="space-y-6">
+                        <template id="education-template">
+                            <div>
+                                <h4 class="text-base md:text-lg font-bold education-degree"></h4>
+                                <p class="text-sm md:text-base text-gray-400 education-institution"></p>
+                                <p class="text-sm md:text-base text-gray-400 mt-2 education-description"></p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="card p-6 md:p-8 rounded-lg" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 gradient-text"> > Skills</h3>
+                    <div id="skills-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <template id="skills-template">
+                            <div class="p-3 sm:p-4">
+                                <h4 class="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 skill-category"></h4>
+                                <ul class="text-sm sm:text-base md:text-lg text-gray-400 space-y-1 sm:space-y-2 skill-list">
+                                    <!-- Each skill item will include a logo and name -->
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-6 md:p-8 rounded-lg mb-8 mt-12" data-aos="fade-up">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 gradient-text"> > Certifications</h3>
+                <div id="certifications-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    <template id="certification-template">
+                        <div class="card p-6 md:p-8 rounded-lg shadow-lg bg-gray-800 text-gray-200 hover:shadow-xl transition-shadow duration-300" data-aos="fade-up">
+                            <h4 class="text-base md:text-lg font-bold mb-2 certification-title text-accent"></h4>
+                            <p class="text-xs md:text-sm text-gray-400 mb-2 certification-issuer"></p>
+                            <p class="text-xs md:text-sm text-gray-500 italic mb-4 certification-date"></p>
+                            <p class="text-xs md:text-sm text-gray-300 certification-description leading-relaxed"></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-12 md:py-20 px-4 md:px-6" style="background-color: #161b22e0;">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-16 terminal-text" data-aos="fade-up">> Archives</h2>
+            <div id="github-repos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="loading-spinner text-center col-span-2">
+                    <i class="fas fa-spinner fa-spin text-4xl text-accent"></i>
+                </div>
+                <template id="repo-template">
+                    <div class="card p-6 rounded-lg hover:scale-[1.02] transition-transform" data-aos="fade-up">
+                        <h3 class="text-xl font-bold mb-3 gradient-text"></h3>
+                        <p class="text-gray-400 text-sm mb-4 repo-description"></p>
+                        <div class="flex items-center space-x-4 text-sm mb-4">
+                            <span class="flex items-center">
+                                <i class="fas fa-code-branch mr-2"></i>
+                                <span class="repo-language"></span>
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fas fa-star mr-2"></i>
+                                <span class="repo-stars"></span>
+                            </span>
+                            <a href="#" class="repo-link ml-auto text-accent hover:underline" target="_blank">
+                                <p class="font-bold font text-lg">$ cat README.md</p>
+                            </a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 md:py-20 px-4 md:px-6">
+        <div class="container mx-auto max-w-2xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-16 terminal-text" data-aos="fade-up">> connect</h2>
+            <div class="card p-6 md:p-8 rounded-lg text-center" data-aos="fade-up">
+                <div class="mb-6 md:mb-8">
+                    <h3 class="text-lg md:text-xl mb-2">Email</h3>
+                    <a href="mailto:nagasainanduri@gmail.com" class="text-sm md:text-base text-accent hover:underline transform hover:translate-y-[-2px] inline-block transition-transform">nagasainanduri@gmail.com</a>
+                </div>
+                <div class="flex justify-center space-x-6">
+                    <a href="https://github.com/amevrynx" class="social-link text-xl md:text-2xl" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://instagram.com/amevrynx" class="social-link text-xl md:text-2xl" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/nagasainanduri" class="social-link text-xl md:text-2xl" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-gray-400 text-sm" style="background-color: var(--bg-secondary)">
+        <div class="container mx-auto">
+            <p>&copy; 2025 Neela Naga Sai. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="/scripts/script.js" defer></script>
+</body>
+</html>
