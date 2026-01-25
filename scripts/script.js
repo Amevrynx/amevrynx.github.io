@@ -23,22 +23,6 @@ function toggleTheme() {
     try { document.dispatchEvent(new Event('themechange')); } catch (e) {}
 }
 
-// Force-reload CSS on each page load to avoid stale styles
-function bustCSS() {
-    const links = document.querySelectorAll('link[rel="stylesheet"]');
-    links.forEach(link => {
-        try {
-            const href = link.getAttribute('href');
-            if (!href) return;
-            if (href.includes('/styles/style.css') || href.endsWith('style.css') || link.href.startsWith(location.origin)) {
-                const url = new URL(link.href, location.origin);
-                url.searchParams.set('ts', Date.now());
-                link.href = url.toString();
-            }
-        } catch (e) {}
-    });
-}
-
 // Preload critical resources referenced in the HTML (styles, scripts, images, icons, fonts)
 function preloadResources(timeout = 5000) {
     const seen = new Set();
@@ -56,7 +40,7 @@ function preloadResources(timeout = 5000) {
             } catch (e) {}
         });
 
-        // collect scripts: avoid preloading external CDN scripts (they often warn if not used immediately)
+        // collect scripts: avoid preloading external CDN scripts
         document.querySelectorAll('script[src]').forEach(s => {
             if (!s.src) return;
             try {
