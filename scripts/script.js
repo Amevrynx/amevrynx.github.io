@@ -39,6 +39,60 @@ function bustCSS() {
     });
 }
 
+// Preload critical resources referenced in the HTML (styles, scripts, images, icons, fonts)
+function preloadResources(timeout = 5000) {
+    const seen = new Set();
+    const resources = [];
+
+    // collect stylesheet and script href/src
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(l => { if (l.href) resources.push({href: l.href, as: 'style'}); });
+    document.querySelectorAll('script[src]').forEach(s => { if (s.src) resources.push({href: s.src, as: 'script'}); });
+    document.querySelectorAll('link[rel="icon"]').forEach(i => { if (i.href) resources.push({href: i.href, as: 'image'}); });
+    document.querySelectorAll('img[src]').forEach(img => { if (img.src) resources.push({href: img.src, as: 'image'}); });
+    const fontLinks = Array.from(document.querySelectorAll('link[href*="fonts.googleapis.com"], link[href*="fonts.gstatic.com"]'));
+    fontLinks.forEach(l => {
+        try {
+            const u = new URL(l.href);
+            resources.push({href: u.origin, as: 'preconnect'});
+        } catch (e) {}
+    });
+
+    const promises = resources.map(r => {
+        if (!r.href) return Promise.resolve();
+        if (seen.has(r.href)) return Promise.resolve();
+        seen.add(r.href);
+
+        if (r.as === 'preconnect') {
+            return new Promise(resolve => {
+                const link = document.createElement('link');
+                link.rel = 'preconnect';
+                link.href = r.href;
+                link.crossOrigin = '';
+                document.head.appendChild(link);
+                setTimeout(resolve, 50);
+            });
+        }
+
+        return new Promise((resolve) => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.as = r.as || 'fetch';
+            link.href = r.href;
+            let done = false;
+
+            function finish() { if (done) return; done = true; resolve(); }
+
+            link.onload = () => finish();
+            link.onerror = () => finish();
+            document.head.appendChild(link);
+
+            setTimeout(() => finish(), timeout);
+        });
+    });
+
+    return Promise.all(promises).then(() => {});
+}
+
 // AOS Initialization
 AOS.init({
     duration: 600,
@@ -150,7 +204,6 @@ function initializeMatrixBackground() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     document.body.appendChild(canvas);
-    // responsive canvas / drops setup
     const chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?~アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン";
     const drops = [];
     const fontSize = 16;
@@ -288,17 +341,37 @@ function loadSkills() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Apply cache-busting first so preload uses fresh URLs
     bustCSS();
-    initTheme();
-    const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
-    const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
-    if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
 
-    loadGitHubRepos();
-    initializeMatrixBackground();
-    loadCertifications();
-    loadEducation();
-    loadSkills();
-    initSectionObserver();
+    // Preload critical resources (styles, scripts, images, fonts) then initialize
+    preloadResources(6000).then(() => {
+        initTheme();
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+        const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
+        if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
+
+        // initialize features after preloads
+        loadGitHubRepos();
+        initializeMatrixBackground();
+        loadCertifications();
+        loadEducation();
+        loadSkills();
+        initSectionObserver();
+    }).catch(() => {
+        // If preloading fails or times out, still initialize to avoid blocking UX
+        initTheme();
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) themeBtn.addEventListener('click', toggleTheme);
+        const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
+        if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
+
+        loadGitHubRepos();
+        initializeMatrixBackground();
+        loadCertifications();
+        loadEducation();
+        loadSkills();
+        initSectionObserver();
+    });
 });
