@@ -45,17 +45,34 @@ function preloadResources(timeout = 5000) {
     const resources = [];
 
     // collect stylesheet and script href/src
-    document.querySelectorAll('link[rel="stylesheet"]').forEach(l => { if (l.href) resources.push({href: l.href, as: 'style'}); });
-    document.querySelectorAll('script[src]').forEach(s => { if (s.src) resources.push({href: s.src, as: 'script'}); });
-    document.querySelectorAll('link[rel="icon"]').forEach(i => { if (i.href) resources.push({href: i.href, as: 'image'}); });
-    document.querySelectorAll('img[src]').forEach(img => { if (img.src) resources.push({href: img.src, as: 'image'}); });
-    const fontLinks = Array.from(document.querySelectorAll('link[href*="fonts.googleapis.com"], link[href*="fonts.gstatic.com"]'));
-    fontLinks.forEach(l => {
-        try {
-            const u = new URL(l.href);
-            resources.push({href: u.origin, as: 'preconnect'});
-        } catch (e) {}
-    });
+        // collect stylesheet hrefs (only same-origin stylesheets for preload)
+        document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+            if (!l.href) return;
+            try {
+                const u = new URL(l.href, location.href);
+                // for Google Fonts we only preconnect to the origin
+                if (u.hostname.includes('fonts.googleapis.com') || u.hostname.includes('fonts.gstatic.com')) {
+                    resources.push({ href: u.origin, as: 'preconnect' });
+                } else if (u.origin === location.origin) {
+                    resources.push({ href: u.href, as: 'style' });
+                }
+            } catch (e) {}
+        });
+
+        // collect scripts: avoid preloading external CDN scripts (they often warn if not used immediately)
+        document.querySelectorAll('script[src]').forEach(s => {
+            if (!s.src) return;
+            try {
+                const u = new URL(s.src, location.href);
+                if (u.origin === location.origin) {
+                    resources.push({ href: u.href, as: 'script' });
+                }
+            } catch (e) {}
+        });
+
+        // icons and images: only preload same-origin assets
+        document.querySelectorAll('link[rel="icon"]').forEach(i => { if (i.href) try { const u=new URL(i.href,location.href); if(u.origin===location.origin) resources.push({href:u.href, as:'image'}); } catch(e){} });
+        document.querySelectorAll('img[src]').forEach(img => { if (img.src) try { const u=new URL(img.src,location.href); if(u.origin===location.origin) resources.push({href:u.href, as:'image'}); } catch(e){} });
 
     const promises = resources.map(r => {
         if (!r.href) return Promise.resolve();
