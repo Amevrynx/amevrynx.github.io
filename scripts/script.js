@@ -41,12 +41,12 @@ function bustCSS() {
 
 // AOS Initialization
 AOS.init({
-    duration: 300,
-    easing: 'ease-in-out',
+    duration: 600,
+    easing: 'ease-out-cubic',
     once: false,
-    mirror: true,
-    offset: 120,
-    delay: 100,
+    mirror: false,
+    offset: 100,
+    delay: 60,
     anchorPlacement: 'top-bottom'
 });
 
@@ -59,7 +59,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (!target) return;
         e.preventDefault();
         const nav = document.getElementById('main-nav');
-        const headerOffset = nav ? (nav.offsetHeight + 20) : 80;
+        const headerOffset = nav ? (nav.offsetHeight + 12) : 80;
         const elementPosition = target.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
@@ -74,8 +74,8 @@ let _sectionObserver = null;
 function initSectionObserver() {
     if (_sectionObserver) { _sectionObserver.disconnect(); _sectionObserver = null; }
     const nav = document.getElementById('main-nav');
-    const navHeight = nav ? nav.offsetHeight + 20 : 80;
-    const options = { root: null, rootMargin: `-${navHeight}px 0px -55% 0px`, threshold: 0.08 };
+    const navHeight = nav ? nav.offsetHeight + 12 : 80;
+    const options = { root: null, rootMargin: `-${navHeight}px 0px -40% 0px`, threshold: 0.15 };
     _sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             const id = entry.target.id;
@@ -89,6 +89,9 @@ function initSectionObserver() {
     document.querySelectorAll('section[id]').forEach(section => _sectionObserver.observe(section));
     let resizeTimer = null;
     window.addEventListener('resize', () => { if (resizeTimer) clearTimeout(resizeTimer); resizeTimer = setTimeout(() => initSectionObserver(), 250); });
+
+    // ensure AOS positions refresh after observer is setup
+    try { AOS.refresh(); } catch (e) {}
 }
 
 // Typed.js Framework Usage
