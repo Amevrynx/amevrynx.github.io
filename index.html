@@ -32,44 +32,8 @@
     <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4 bg-opacity-90 backdrop-filter backdrop-blur-sm shadow-lg transition-transform duration-300" style="background-color: #1c253196; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-2xl font-bold terminal-text hover:scale-105 transition-transform name-logo">~/nns</a>
-            
-            <button id="menu-toggle" class="menu-button text-2xl text-accent hover:text-white transition-colors">
-                <i class="fas fa-terminal"></i>
-            </button>
         </div>
     </nav>
-
-    <!-- Full Screen Menu -->
-    <div id="fullscreen-menu" class="fixed inset-0 bg-bg-primary z-40 transform translate-x-full transition-transform duration-500">
-        <div class="menu-glitch-container">
-            <div class="menu-glitch-layer"></div>
-            <div class="menu-glitch-layer"></div>
-            <div class="menu-glitch-layer"></div>
-        </div>
-        <div class="menu-content">
-            <div class="menu-header">
-                <div class="menu-title glitch-text whitespace-nowrap overflow-hidden text-ellipsis" data-text="SYSTEM MENU">SYSTEM MENU</div>
-                <div class="menu-subtitle">> Select an option to proceed</div>
-            </div>
-            <div class="menu-links">
-                <a href="#home" class="menu-link">
-                    <span class="menu-link-text" data-text="$ init_system">$ init_system</span>
-                </a>
-                <a href="#about" class="menu-link">
-                    <span class="menu-link-text" data-text="$ access_bio.dat">$ access_bio.dat</span>
-                </a>
-                <a href="#qualifications" class="menu-link">
-                    <span class="menu-link-text" data-text="$ decrypt_credentials">$ decrypt_credentials</span>
-                </a>
-                <a href="#work" class="menu-link">
-                    <span class="menu-link-text" data-text="$ scan_archives">$ scan_archives</span>
-                </a>
-                <a href="#contact" class="menu-link">
-                    <span class="menu-link-text" data-text="$ establish_connection">$ establish_connection</span>
-                </a>
-            </div>
-        </div>
-    </div>
 
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center px-4 sm:px-6 py-20 relative">
@@ -88,7 +52,7 @@
                     </div>
                     <div class="terminal-content p-8" style="color: var(--text-primary); font-family: 'Share Tech Mono', monospace; text-align: left; overflow-x: auto; min-height: 200px;">
                         <p class="terminal-line"><span class="terminal-prompt" style="color: var(--accent); font-size: 1.25rem; ">$</span> <span class="text-gray-400">cat name.txt | figlet</span></p>
-                        <pre class="text-5xl sm:text-6xl md:text-7xl font-bold whitespace-pre-wrap" style="color: var(--accent); ">NeelaNagaSai  
+                        <pre class="text-5xl sm:text-6xl md:text-7xl font-bold whitespace-pre-wrap" style="color: var(--accent); ">Amevrynx 
                         </pre>
                         <p class="terminal-line"><span class="terminal-prompt" style="color: var(--accent); font-size: 1.25rem; ">$</span> <span class="text-gray-400">whoami</span></p>
                         <p class="terminal-line"><span class="terminal-prompt" style="color: var(--accent); font-size: 1.25rem; ">> </span><span id="typed-text" class="text-xl sm:text-2xl text-gray-400"></span></p>

@@ -198,60 +198,6 @@ function loadSkills() {
         .catch(error => console.error('Error loading skills data:', error));
 }
 
-// Menu functionality
-const menuToggle = document.getElementById('menu-toggle');
-const fullscreenMenu = document.getElementById('fullscreen-menu');
-const menuLinks = document.querySelectorAll('.menu-link');
-
-function toggleMenu() {
-    const isActive = fullscreenMenu.classList.contains('active');
-    
-    if (isActive) {
-        fullscreenMenu.classList.add('closing');
-        menuToggle.classList.remove('active');
-        menuToggle.innerHTML = '<i class="fas fa-terminal"></i>';
-        document.body.style.overflow = '';
-
-        setTimeout(() => {
-            fullscreenMenu.classList.remove('active', 'closing');
-        }, 300);
-    } else {
-        fullscreenMenu.classList.add('active');
-        menuToggle.classList.add('active');
-        menuToggle.innerHTML = '<i class="fas fa-times"></i>';
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-menuToggle.addEventListener('click', toggleMenu);
-
-menuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        fullscreenMenu.classList.add('closing');
-        menuToggle.classList.remove('active');
-        menuToggle.innerHTML = '<i class="fas fa-terminal"></i>';
-        document.body.style.overflow = '';
-
-        setTimeout(() => {
-            fullscreenMenu.classList.remove('active', 'closing');
-        }, 300);
-    });
-});
-
-// Close menu on escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && fullscreenMenu.classList.contains('active')) {
-        fullscreenMenu.classList.add('closing');
-        menuToggle.classList.remove('active');
-        menuToggle.innerHTML = '<i class="fas fa-terminal"></i>';
-        document.body.style.overflow = '';
-        
-        setTimeout(() => {
-            fullscreenMenu.classList.remove('active', 'closing');
-        }, 300);
-    }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     loadGitHubRepos();
     initializeMatrixBackground();
