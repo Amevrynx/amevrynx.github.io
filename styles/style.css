@@ -6,7 +6,7 @@
     --bg-secondary: #161b22;
     --text-primary: #c9d1d9;
     --text-secondary: #8b949e;
-    --accent: #c81d25; /* blood red */
+    --accent: #c81d25;
     --accent-rgb: 200,29,37;
 
     /* RGB counterparts for fine-grained rgba(...) usage */
@@ -91,9 +91,9 @@
     box-sizing: border-box;
 }
 
-::-webkit-scrollbar {width: 8px;}
+::-webkit-scrollbar {width: 4px;}
 ::-webkit-scrollbar-track {background: var(--bg-secondary);}
-::-webkit-scrollbar-thumb {background: var(--accent);}
+::-webkit-scrollbar-thumb {background: var(--accent); border-radius: 10px;}
 ::-webkit-scrollbar-thumb:hover {background: var(--accent);} 
 
 body {
@@ -387,7 +387,6 @@ body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* reduce loader opacity on light theme slightly */
 .theme-light .site-loader { background: rgba(255,255,255,0.85); }
 .theme-light .spinner { border-color: rgba(0,0,0,0.06); border-top-color: rgba(var(--accent-rgb),1); }
 
