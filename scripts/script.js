@@ -31,7 +31,6 @@ function preloadResources(timeout = 5000) {
             if (!l.href) return;
             try {
                 const u = new URL(l.href, location.href);
-                // for Google Fonts we only preconnect to the origin
                 if (u.hostname.includes('fonts.googleapis.com') || u.hostname.includes('fonts.gstatic.com')) {
                     resources.push({ href: u.origin, as: 'preconnect' });
                 } else if (u.origin === location.origin) {
@@ -166,12 +165,13 @@ function initSectionObserver() {
 new Typed('#typed-text', {
     strings: ['Student', 'Beginner Android-Dev', 'Full-Stack Dev', 'Creative Designer', 'Linux Enthusiast'],
     typeSpeed: 50,
-    backSpeed: 30,
+    backSpeed: 50,
     loop: true,
-    showCursor: true
+    showCursor: true,
+    cursorChar: '|',
 });
 
-// GitHub Repos Loading Script
+// Load GitHub Repositories
 const GITHUB_USERNAME = 'amevrynx';
 const GITHUB_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos`;
 
@@ -218,9 +218,9 @@ function initializeMatrixBackground() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     document.body.appendChild(canvas);
-    const chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?~アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン";
+    const chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?~アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン一二三四五六七八九十百千口目手足心日日年小大中上下左右前后里外走来去看听说读写吃喝朋友家学校书马鱼鸟花";
     const drops = [];
-    const fontSize = 16;
+    const fontSize = 10;
     let columns = 0;
 
     function resizeCanvas() {
