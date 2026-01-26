@@ -161,55 +161,93 @@ function initSectionObserver() {
     try { AOS.refresh(); } catch (e) {}
 }
 
-// Typed.js Framework Usage
-new Typed('#typed-text', {
-    strings: ['Student', 'Beginner Android-Dev', 'Full-Stack Dev', 'Creative Designer', 'Linux Enthusiast'],
-    typeSpeed: 50,
-    backSpeed: 50,
-    loop: true,
-    showCursor: true,
-    cursorChar: '|',
-});
+// Typed.js initialization (lazy)
+function initTyped() {
+    const makeTyped = () => {
+        try {
+            new Typed('#typed-text', {
+                strings: ['Student', 'Beginner Android-Dev', 'Full-Stack Dev', 'Creative Designer', 'Linux Enthusiast'],
+                typeSpeed: 50,
+                backSpeed: 50,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|',
+            });
+        } catch (e) {}
+    };
+
+    if (typeof Typed === 'undefined') {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/typed.js@2.0.12';
+        s.defer = true;
+        s.onload = makeTyped;
+        document.head.appendChild(s);
+    } else {
+        makeTyped();
+    }
+}
 
 // Load GitHub Repositories
 const GITHUB_USERNAME = 'amevrynx';
 const GITHUB_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos`;
 
+const GITHUB_CACHE_KEY = 'github_repos_cache_v1';
+const GITHUB_CACHE_TTL = 1000 * 60 * 60;
+
+function renderRepos(repos) {
+    const sortedRepos = repos
+        .filter(repo => !repo.fork)
+        .sort((a, b) => b.stargazers_count - a.stargazers_count)
+        .slice(0, 6);
+
+    const reposContainer = document.getElementById('github-repos');
+    const template = document.getElementById('repo-template');
+    const loadingSpinner = document.querySelector('.loading-spinner');
+    if (loadingSpinner && loadingSpinner.remove) loadingSpinner.remove();
+
+    sortedRepos.forEach(repo => {
+        const card = template.content.cloneNode(true);
+
+        card.querySelector('h3').textContent = repo.name;
+        card.querySelector('.repo-description').textContent = repo.description || 'No description available';
+        card.querySelector('.repo-language').textContent = repo.language || 'N/A';
+        card.querySelector('.repo-stars').textContent = repo.stargazers_count;
+        card.querySelector('.repo-link').href = repo.html_url;
+
+        reposContainer.appendChild(card);
+    });
+}
+
 async function loadGitHubRepos() {
     try {
+        // Try local cache first
+        try {
+            const cached = localStorage.getItem(GITHUB_CACHE_KEY);
+            if (cached) {
+                const parsed = JSON.parse(cached);
+                if (parsed && (Date.now() - parsed.ts) < GITHUB_CACHE_TTL && parsed.repos) {
+                    renderRepos(parsed.repos);
+                    return;
+                }
+            }
+        } catch (e) { /* ignore cache errors */ }
+
         const response = await fetch(GITHUB_API_URL);
         const repos = await response.json();
 
-        const sortedRepos = repos
-            .filter(repo => !repo.fork)
-            .sort((a, b) => b.stargazers_count - a.stargazers_count)
-            .slice(0, 6);
+        // store cache
+        try { localStorage.setItem(GITHUB_CACHE_KEY, JSON.stringify({ ts: Date.now(), repos })); } catch (e) {}
 
-        const reposContainer = document.getElementById('github-repos');
-        const template = document.getElementById('repo-template');
-        const loadingSpinner = document.querySelector('.loading-spinner');
-        loadingSpinner.remove();
-
-        sortedRepos.forEach(repo => {
-            const card = template.content.cloneNode(true);
-
-            card.querySelector('h3').textContent = repo.name;
-            card.querySelector('.repo-description').textContent = repo.description || 'No description available';
-            card.querySelector('.repo-language').textContent = repo.language || 'N/A';
-            card.querySelector('.repo-stars').textContent = repo.stargazers_count;
-            card.querySelector('.repo-link').href = repo.html_url;
-
-            reposContainer.appendChild(card);
-        });
+        renderRepos(repos);
 
     } catch (error) {
         console.error('Error fetching GitHub repos:', error);
-        const reposContainer = document.getElementById('github-repos');
         const loadingSpinner = document.querySelector('.loading-spinner');
-
-        loadingSpinner.innerHTML = `
-            <p class="text-red-500">Error loading repositories. Please try again later or try refreshing the page !!</p>
-        `;
+        if (loadingSpinner) {
+            loadingSpinner.innerHTML = `
+                <p class="text-red-500">Error loading repositories. Please try again later or try refreshing the page !!</p>
+            `;
+        }
     }
 }
 
@@ -365,9 +403,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const mobileThemeBtn = document.getElementById('mobile-theme-toggle');
         if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
 
-        // initialize features after preloads
         loadGitHubRepos();
-        initializeMatrixBackground();
+
+        const idleStart = (fn) => {
+            if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1500 });
+            else setTimeout(fn, 500);
+        };
+
+        idleStart(initializeMatrixBackground);
+        idleStart(initTyped);
+
         loadCertifications();
         loadEducation();
         loadSkills();
@@ -383,7 +428,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (mobileThemeBtn) mobileThemeBtn.addEventListener('click', toggleTheme);
 
         loadGitHubRepos();
-        initializeMatrixBackground();
+        const idleStart = (fn) => {
+            if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 1500 });
+            else setTimeout(fn, 500);
+        };
+
+        idleStart(initializeMatrixBackground);
+        idleStart(initTyped);
         loadCertifications();
         loadEducation();
         loadSkills();
