@@ -15,7 +15,7 @@
     --text-primary-rgb: 201,209,217;
     --text-secondary-rgb: 139,148,158;
 
-    /* terminal button defaults (can be themed) */
+    /* terminal button defaults*/
     --terminal-btn-close-rgb: 255,95,86;
     --terminal-btn-minimize-rgb: 255,189,46;
     --terminal-btn-maximize-rgb: 39,201,63;
@@ -245,11 +245,11 @@ body {
     background: var(--nav-bg);
     border: 1px solid var(--nav-border);
     border-radius: 12px;
-    backdrop-filter: blur(10px) saturate(120%);
-    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
     box-shadow: 0 8px 30px rgba(2,6,23,0.45);
     width: 100%;
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     overflow: hidden;
     transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
