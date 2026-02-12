@@ -1,0 +1,10 @@
+# robots.txt for amevrynx.github.io
+
+User-agent: *
+Allow: /
+Crawl-delay: 5
+
+# Sitemap
+Sitemap: https://amevrynx.github.io/sitemap.xml
+# Host directive
+Host: amevrynx.github.io
