@@ -217,10 +217,10 @@ function initTyped() {
       new Typed("#typed-text", {
         strings: [
           "Student",
-          "Beginner Android-Dev",
+          "Red Teamer",
+          "Linux Enthusiast",
           "Full-Stack Dev",
           "Creative Designer",
-          "Linux Enthusiast",
         ],
         typeSpeed: 50,
         backSpeed: 50,

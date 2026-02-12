@@ -3,23 +3,24 @@
         {
             "category": "Languages",
             "items": [
-                { "name": "JavaScript", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-                { "name": "TypeScript", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-                { "name": "Dart", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" },
-                { "name": "Python", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-                { "name": "Java", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
-                { "name": "C++", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" }
+                { "name": "Python", "logo": "/assets/icons/python.svg" },
+                { "name": "PowerShell", "logo": "/assets/icons/powershell.svg" },
+                { "name": "Bash", "logo": "/assets/icons/bash.svg" },
+                { "name": "Go", "logo": "/assets/icons/go.svg" },
+                { "name": "C", "logo": "/assets/icons/c.svg" },
+                { "name": "C++", "logo": "/assets/icons/cpp.svg" }
             ]
         },
         {
             "category": "Technologies",
             "items": [
-                { "name": "React.js", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-                { "name": "Next.js", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-wordmark.svg" },
-                { "name": "Flutter", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
-                { "name": "Node.js", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-                { "name": "Docker", "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" }
+                { "name": "Metasploit", "logo": "/assets/icons/metasploit.svg" },
+                { "name": "Sliver", "logo": "/assets/icons/sliver.svg" },
+                { "name": "BloodHound", "logo": "/assets/icons/bloodhound.svg" },
+                { "name": "Nmap", "logo": "/assets/icons/nmap.svg" },
+                { "name": "Burp Suite", "logo": "/assets/icons/burpsuite.svg" },
+                { "name": "Wireshark", "logo": "/assets/icons/wireshark.svg" }
             ]
         }
     ]
-}   
+}

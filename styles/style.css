@@ -699,3 +699,23 @@ img {
 .loaded {
   opacity: 1;
 }
+
+img[src$=".svg"], img.svg {
+  color: inherit;
+  display: inline-block;
+  transition: filter 220ms ease;
+}
+
+.theme-dark img[src$=".svg"], .theme-dark img.svg {
+  filter: invert(1) hue-rotate(180deg) saturate(1);
+}
+.theme-light img[src$=".svg"], .theme-light img.svg {
+  filter: none;
+}
+
+/* Fallback: respect system preference when theme classes are not applied */
+@media (prefers-color-scheme: dark) {
+  img[src$=".svg"] {
+    filter: invert(1) hue-rotate(180deg) saturate(1);
+  }
+}
